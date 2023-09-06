@@ -7,25 +7,28 @@ let pathURL='/users';
 let loc = process.env.SERVERURL+':'+
 process.env.PORT+
 process.env.APIURL+
-pathURL;
+process.env.usersPATH;
 
 
 const getUsers = (req, res) => {
     const { filter, index, count } = req.query;
     if (filter) {
+        let user={};
         const fil = filter.split(' ');
         console.log(fil);
         if (fil[1] === 'eq') {
-            const user = users.find((u)=> {
-                if (`"${u.userName}"` === fil[2]) {
-                    return res.status(200).json(u);
+            user = users.find((u)=> {
+                 if (`"${u.userName}"` === fil[2]) {
+                    return u;
                 }
-                else{
-                    res.setHeader('content-type', 'text/plain');
-                    return res.status(401).send(userNotFound);
-                }
-                
-            })
+            })   
+        }
+        if (user){
+            res.status(200).json(user);
+        }
+        else{
+            res.setHeader('content-type', 'text/html');
+            res.status(401).json(userNotFound);      
         }
     }
     else{
@@ -44,6 +47,7 @@ const createUsers = (req,res)=>{
     const id = index;
     const user = req.body;
     user.id = String(Number(id)+1);
+    delete user.password;
     users.push(user);
     const m = meta;
     m.location= loc+`/${user.id}`;
@@ -54,20 +58,23 @@ const createUsers = (req,res)=>{
 
 const deleteUser = (req, res) => {
     const { id } = req.params;
-    var cnt = 0;
-    //take a relook at this whole fn later. find functions should not delete user only find it. 
-    const user = users.find((u)=> {
-        console.log(u.userName);
+    var cnt = 0; 
+    var user = users.find((u)=> {
     if (u.id === id) {
+        console.log(u.userName);
         users.splice(cnt, 1);
         console.log("found user");
-        return res.status(200).json([]);
+        return u;
     }
     cnt++;
     })
-    if (!user) {
-     return res.status(404);
-    }   
+    if (user) {
+        res.status(200).json(null);
+    }
+    else{
+        res.setHeader('content-type', 'text/plain');
+        res.status(404).json(userNotFound);
+    }           
 }
 
 module.exports ={
