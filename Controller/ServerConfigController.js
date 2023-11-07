@@ -3,7 +3,7 @@ const getServiceProvider=(req,res)=>{
   {
     "schemas":
       ["urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig"],
-    "documentationUri": "http://localhost:3000/help/scim.html",
+    "documentationUri": "http://example.com/help/scim.html",
     "patch": {
       "supported":false
     },
@@ -75,7 +75,7 @@ const getResourceTypes=(req,res)=>{
         "required": false
       }],
       "meta": {
-        "location":"https://localhost:3000/api/v2/ResourceTypes/User",
+        "location":"https://localhost:3000/api/v2/User",
         "resourceType": "ResourceType"
       }
     },
@@ -87,7 +87,7 @@ const getResourceTypes=(req,res)=>{
      "description": "Group",
      "schema": "urn:ietf:params:scim:schemas:core:2.0:Group",
      "meta": {
-       "location":"https://example.com/api/v2/ResourceTypes/Group",
+       "location":"https://localhost:3000/api/v2/Group",
        "resourceType": "ResourceType"
      }
    }]

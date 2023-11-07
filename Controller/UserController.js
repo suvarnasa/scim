@@ -1,8 +1,7 @@
 require('dotenv').config();
-let {users, meta, userNotFound} = require('../data');
+let {users, usermeta, userNotFound} = require('../data');
 
-let index = 5;
-let pathURL='/users';
+let index = 6;
 
 let loc = process.env.SERVERURL+':'+
 process.env.PORT+
@@ -49,7 +48,7 @@ const createUsers = (req,res)=>{
     user.id = String(Number(id)+1);
     delete user.password;
     users.push(user);
-    const m = meta;
+    const m = usermeta;
     m.location= loc+`/${user.id}`;
     user.meta = m;
     index++;

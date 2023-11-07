@@ -1,11 +1,3 @@
-const u = [
-    {id:0, cn:'aa1', sn:'asn1'},
-    {id:1, cn:'bb1', sn:'bsn1'},
-    {id:2, cn:'cc', sn:'csn1'},
-    {id:3, cn:'dd', sn:'dsn1'},
-];
-
-
 const users = [
     {
         "schemas":["urn:ietf:params:scim:schemas:core:2.0:User"],
@@ -129,7 +121,7 @@ const users = [
       },
       {
         "schemas":["urn:ietf:params:scim:schemas:core:2.0:User"],
-        "id":"4",
+        "id":"5",
         "externalId":"esm",
         "meta":{
           "resourceType":"User",
@@ -159,7 +151,7 @@ const users = [
       },
       {
         "schemas":["urn:ietf:params:scim:schemas:core:2.0:User"],
-        "id":"5",
+        "id":"6",
         "externalId":"fpq",
         "meta":{
           "resourceType":"User",
@@ -187,17 +179,98 @@ const users = [
           }
         ]
       },
-]
-const meta ={
+];
+
+const groups=[
+  {
+    "schemas": ["urn:ietf:params:scim:schemas:core:2.0:Group"],
+    "id": "1",
+    "displayName": "TestScmGrp",
+    "members": [
+      {
+        "value" : "1",
+        "$ref":"http://localhost:3000/api/v2/users/1",
+        "type":"User",
+        "display": "bjensen",
+      },
+      
+    ],
+    "meta": {
+        "resourceType": "Group"
+    }
+  },
+    {
+      "schemas": ["urn:ietf:params:scim:schemas:core:2.0:Group"],
+      "id": "2",
+      "displayName": "SecondGroup",
+      "members": [
+        {
+          "value" : "2",
+          "$ref":"http://localhost:3000/api/v2/users/2",
+          "type":"User",
+          "display": "ajonhson",    //username in Okta for users. Group name in case of group
+        },
+      ],
+      "meta": {
+          "resourceType": "Group"
+      }
+  },
+  {
+    "schemas": ["urn:ietf:params:scim:schemas:core:2.0:Group"],
+    "id": "3",
+    "displayName": "thirdGroup",
+    "members": [
+      {
+        "value" : "2",
+        "$ref":"http://localhost:3000/api/v2/groups/2",
+        "type":"Group",
+        "display": "SecondGroup",
+      },
+    ],
+    "meta": {
+        "resourceType": "Group"
+    }
+  },
+  {
+    "schemas": ["urn:ietf:params:scim:schemas:core:2.0:Group"],
+    "id": "4",
+    "displayName": "fourthGroup",
+    "members": [],
+    "meta": {
+        "resourceType": "Group"
+    }
+  },
+  {
+    "schemas": ["urn:ietf:params:scim:schemas:core:2.0:Group"],
+    "id": "5",
+    "displayName": "fifthGroup",
+    "members": [],
+    "meta": {
+        "resourceType": "Group"
+    }
+  },
+
+];
+
+const usermeta ={
     "resourceType": "User",
     "created": "2021-08-01T18:29:49.793Z",
     "lastModified": "2023-08-01T18:29:49.793Z",
     }
 
+const groupmeta={
+  "resourceType": "Group",
+}
 const userNotFound = {
     "schemas": ["urn:ietf:params:scim:api:messages:2.0:Error"],
     "detail": "User not found",
     "status": 404
 }
 
-module.exports={users, meta, userNotFound};
+const groupNotFound = {
+  "schemas": ["urn:ietf:params:scim:api:messages:2.0:Error"],
+  "detail": "Group not found",
+  "status": 404
+}
+
+module.exports={users, groups, usermeta, groupmeta, userNotFound, groupNotFound};
